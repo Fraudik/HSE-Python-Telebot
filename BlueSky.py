@@ -2,6 +2,8 @@ import telebot
 from telebot import types
 import requests
 import random
+from flask import Flask, request
+import os
 # 'game' остлеживает, играет ли сейчас пользовтаель, и если да, то во что
 # остальные поля этого словаря относятся к игре "Кости" и отслеживают внутриигровые механики
 example = {'game': '',
@@ -18,6 +20,7 @@ dices_values = {'один шестигранник': range(1, 7),
                 'один двадцатигранник': range(1, 21)}
 token = '2051717168:AAEdAJ_R9JggheaYe3KKMZV1cDMdXRCrFME'
 bot = telebot.TeleBot(token)
+server = Flask(__name__)
 # *в сообщении, содержащем несколько ключевых слов, считается только первое
 
 
@@ -317,4 +320,20 @@ def unknown_message(message):
                      reply_markup=markup)
 
 
-bot.polling()
+@server.route('/' + token, methods=['POST'])
+def getMessage():
+    json_string = request.get_data().decode('utf-8')
+    update = telebot.types.Update.de_json(json_string)
+    bot.process_new_updates([update])
+    return "!", 200
+
+
+@server.route("/")
+def webhook():
+    bot.remove_webhook()
+    bot.set_webhook(url='https://telebot-pyhon-1-grade.com/' + token)
+    return "!", 200
+
+
+if __name__ == "__main__":
+    server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
