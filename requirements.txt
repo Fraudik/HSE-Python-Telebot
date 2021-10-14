@@ -1,2 +1,4 @@
 requests
 telebot
+flask
+gunicorn
