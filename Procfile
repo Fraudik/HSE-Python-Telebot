@@ -1,1 +1,1 @@
-worker: python BlueSky.py
+web: gunicorn BlueSky:server
