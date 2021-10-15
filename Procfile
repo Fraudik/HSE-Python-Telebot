@@ -1,1 +1,1 @@
-web: gunicorn BlueSky:server
+worker: python BlueSky.py $PORT
