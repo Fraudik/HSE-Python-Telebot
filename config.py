@@ -13,5 +13,4 @@ dices_values = {'один шестигранник': range(1, 7),
                 'два восьмигранника': range(2, 17),
                 'один двадцатигранник': range(1, 21)}
 
-token = '2051717168:AAGNWTqn7sXUPfWF7my_dsj8AxY19QcFZSc'
-
+token = 'YOUR_TOKEN'
